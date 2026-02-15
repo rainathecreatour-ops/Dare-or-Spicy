@@ -4,14 +4,597 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dare or Spicy - Couples Game 18+</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #a855f7 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        
+        .container {
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-bottom: 1rem;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #db2777, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: #ec4899;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #ec4899, #ef4444);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, #10b981, #059669);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #ef4444, #f97316);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #4b5563, #374151);
+            color: white;
+        }
+        
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .deck-card {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+        
+        .deck-card h3 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .deck-card p {
+            font-size: 0.875rem;
+        }
+        
+        .blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .blue h3 { color: #1e40af; }
+        .blue p { color: #1e3a8a; }
+        
+        .orange { background: linear-gradient(135deg, #fed7aa, #fdba74); }
+        .orange h3 { color: #9a3412; }
+        .orange p { color: #7c2d12; }
+        
+        .pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+        .pink h3 { color: #9f1239; }
+        .pink p { color: #831843; }
+        
+        .question-card {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            padding: 2rem;
+            border-radius: 1rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dare-card {
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
+            padding: 2rem;
+            border-radius: 1rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .spicy-card {
+            background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+            padding: 2rem;
+            border-radius: 1rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border: 2px solid #fbcfe8;
+        }
+        
+        .card-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            color: #1f2937;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .timer-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        
+        .badge {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-orange {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+        
+        .badge-pink {
+            background: #fce7f3;
+            color: #9f1239;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+        
+        .heart-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, #ec4899, #ef4444);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .instructions {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+        
+        .instructions h3 {
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+        }
+        
+        .instructions ul {
+            list-style: none;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .text-gray {
+            color: #374151;
+        }
+        
+        .text-xs {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+    </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="card">
+            <div class="heart-icon">
+                <svg width="32" height="32" viewBox="0 0 20 20" fill="white">
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+            <h1 class="title">Dare or Spicy</h1>
+            <p class="subtitle">A couples game for 18+</p>
+            <input type="text" id="licenseInput" class="input" placeholder="Enter Your License Key">
+            <div id="errorMsg" class="error hidden"></div>
+            <button class="btn btn-primary" onclick="checkLicense()">Activate Game</button>
+            <p class="text-xs text-center" style="margin-top: 1.5rem;">Check your Gumroad purchase email for your license key. This game contains adult content. Must be 18+ to play.</p>
+        </div>
+        
+        <!-- Game Screen -->
+        <div id="gameScreen" class="card hidden">
+            <h1 class="title">Dare or Spicy</h1>
+            
+            <!-- Home View -->
+            <div id="homeView">
+                <div class="text-center mb-8">
+                    <p class="text-lg text-gray mb-4">Choose how to start:</p>
+                    <button class="btn btn-primary" onclick="startNewQuestion()">Start New Question</button>
+                </div>
+                
+                <div class="grid">
+                    <div class="deck-card blue">
+                        <h3>Know Me?</h3>
+                        <p>30 intimate questions</p>
+                    </div>
+                    <div class="deck-card orange">
+                        <h3>Dare</h3>
+                        <p>30 fun challenges</p>
+                    </div>
+                    <div class="deck-card pink">
+                        <h3>🔥 Spicy</h3>
+                        <p>30 sensual activities</p>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li>• Partner asks a "Know Me?" question (15 second timer)</li>
+                        <li>• Correct answer → Pick a Spicy card 🔥</li>
+                        <li>• Wrong answer or timeout → Pick a Dare card</li>
+                        <li>• Take turns and have fun!</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Question View -->
+            <div id="questionView" class="hidden">
+                <div class="timer">
+                    <span class="timer-text">⏱️ <span id="timerDisplay">15</span>s</span>
+                    <span class="badge badge-blue">Know Me?</span>
+                </div>
+                <div class="question-card">
+                    <p class="card-text" id="questionText"></p>
+                </div>
+                <div class="grid-2">
+                    <button class="btn btn-success" onclick="handleCorrect()">✓ Correct Answer</button>
+                    <button class="btn btn-danger" onclick="handleWrong()">✗ Wrong Answer</button>
+                </div>
+            </div>
+            
+            <!-- Dare View -->
+            <div id="dareView" class="hidden">
+                <div class="text-center mb-4">
+                    <span class="badge badge-orange">Dare Challenge</span>
+                </div>
+                <div class="dare-card">
+                    <p class="card-text" id="dareText"></p>
+                </div>
+                <button class="btn btn-secondary" onclick="nextRound()">Next Round</button>
+            </div>
+            
+            <!-- Spicy View -->
+            <div id="spicyView" class="hidden">
+                <div class="text-center mb-4">
+                    <span class="badge badge-pink">🔥 Spicy Time</span>
+                </div>
+                <div class="spicy-card">
+                    <p class="card-text" id="spicyText"></p>
+                </div>
+                <button class="btn btn-primary" onclick="nextRound()">Next Round</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Dare or Spicy • For Adults 18+ Only</p>
+        </div>
+    </div>
+
     <script>
-        // Copy all the JavaScript code from the artifact here
+        // VALID LICENSE KEYS - Add your Gumroad keys here
+        const VALID_LICENSE_KEYS = [
+            "DEMO2024",
+            // Add more keys here
+        ];
+
+        const KNOW_ME_QUESTIONS = [
+            "What's my favorite color?",
+            "What's my love language?",
+            "What's my favorite movie?",
+            "What's my favorite position in bed?",
+            "What's my biggest fear?",
+            "What's my dream vacation destination?",
+            "What's my favorite food?",
+            "What's the first thing I notice about someone?",
+            "What's my biggest turn-on?",
+            "What's my favorite way to be kissed?",
+            "What's my go-to comfort meal?",
+            "What's my favorite time of day to be intimate?",
+            "What body part of yours do I love most?",
+            "What's my biggest insecurity?",
+            "What's my favorite pet name you call me?",
+            "What's my ideal date night?",
+            "What's my favorite song right now?",
+            "What's the sexiest thing I've ever worn?",
+            "What's my biggest fantasy?",
+            "What's my favorite way you touch me?",
+            "What's my childhood dream job?",
+            "What's my favorite season?",
+            "What do I find most attractive about you?",
+            "What's my guilty pleasure TV show?",
+            "What's the kinkiest thing I've admitted to you?",
+            "What's my favorite scent on you?",
+            "What's my biggest relationship dealbreaker?",
+            "What makes me feel most loved?",
+            "What's my favorite thing about our sex life?",
+            "What's the one thing I always say during intimacy?"
+        ];
+
+        const DARE_CARDS = [
+            "Drink 3 glasses (8oz each) of water straight without stopping",
+            "Yell out the window: 'I LOVE TO LICK BUTT!'",
+            "Do 20 jumping jacks while singing your favorite song",
+            "Text your best friend 'I just learned something spicy about my partner'",
+            "Speak in a British accent for the next 5 minutes",
+            "Do your best impression of your partner during intimacy",
+            "Post on social media: 'My partner is hotter than yours'",
+            "Eat a spoonful of hot sauce or mustard",
+            "Dance with no music for 2 minutes",
+            "Let your partner draw on your face with lipstick",
+            "Do 10 pushups while your partner sits on your back",
+            "Wear your underwear on your head for 3 minutes",
+            "Tell an embarrassing childhood story",
+            "Let your partner go through your phone for 2 minutes",
+            "Sing 'I'm a Little Teapot' with full choreography",
+            "Do your best sexy walk across the room 3 times",
+            "Let your partner style your hair however they want",
+            "Confess your most embarrassing bedroom moment",
+            "Do the worm across the floor",
+            "Speak only in rhymes for the next 3 minutes",
+            "Let your partner tickle you for 30 seconds without moving",
+            "Recreate the most awkward pose from your partner's social media",
+            "Eat a raw onion slice without reacting",
+            "Do 15 squats while complimenting your partner",
+            "Let your partner put makeup on you (blindfolded)",
+            "Plank for 1 minute while your partner distracts you",
+            "Serenade your partner with a love song dramatically",
+            "Walk like a crab around the room twice",
+            "Tell your partner's most embarrassing moment you witnessed",
+            "Do your best impersonation of a celebrity during sex"
+        ];
+
+        const SPICY_CARDS = [
+            "Kiss your partner's neck for 30 seconds",
+            "Give a long, full-body hug with passion for 2 minutes",
+            "Kiss for 1 minute straight without breaking",
+            "Take your partner's shirt off slowly",
+            "Take your partner's pants off",
+            "Tell them exactly how much you love them and why",
+            "Tell them what made you fall in love with them",
+            "Give them a sensual shoulder and neck massage for 3 minutes",
+            "Whisper your deepest fantasy in their ear",
+            "Kiss every finger on their hand slowly",
+            "Trace your partner's lips with your finger, then kiss them",
+            "Give them a passionate forehead kiss while holding their face",
+            "Run your hands through their hair while maintaining eye contact",
+            "Kiss your way from their hand to their shoulder",
+            "Tell them the sexiest thing they've ever done",
+            "Undress yourself slowly while they watch",
+            "Give them a soft bite on their earlobe",
+            "Slow dance together with full body contact",
+            "Describe in detail what you want to do to them later",
+            "Give them a sensual foot massage",
+            "Kiss their collarbone and chest area",
+            "Straddle your partner and make out for 2 minutes",
+            "Tell them your favorite physical feature of theirs and kiss it",
+            "Remove one piece of your clothing and one of theirs",
+            "Give them goosebumps by lightly touching their arms and back",
+            "Look into their eyes and tell them what turns you on most about them",
+            "Kiss their stomach softly multiple times",
+            "Give them a lap dance for 1 minute",
+            "Nibble and kiss along their jawline",
+            "Tell them exactly where you want them to touch you right now"
+        ];
+
+        let currentCard = 0;
+        let timeLeft = 15;
+        let timerInterval = null;
+        let usedCards = { knowMe: [], dare: [], spicy: [] };
+
+        // Check saved license on load
+        window.onload = function() {
+            const savedKey = localStorage.getItem('dareSpicyLicense');
+            if (savedKey && VALID_LICENSE_KEYS.includes(savedKey)) {
+                showGameScreen();
+            }
+            
+            // Enter key on license input
+            document.getElementById('licenseInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkLicense();
+                }
+            });
+        };
+
+        function checkLicense() {
+            const input = document.getElementById('licenseInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (VALID_LICENSE_KEYS.includes(input)) {
+                localStorage.setItem('dareSpicyLicense', input);
+                errorMsg.classList.add('hidden');
+                showGameScreen();
+            } else {
+                errorMsg.textContent = 'Invalid license key. Please check your Gumroad purchase email.';
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function showGameScreen() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+        }
+
+        function showView(viewId) {
+            ['homeView', 'questionView', 'dareView', 'spicyView'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        function getRandomCard(deck) {
+            const cards = { knowMe: KNOW_ME_QUESTIONS, dare: DARE_CARDS, spicy: SPICY_CARDS };
+            const available = cards[deck].map((c, i) => i).filter(i => !usedCards[deck].includes(i));
+            
+            if (available.length === 0) {
+                usedCards[deck] = [];
+                return Math.floor(Math.random() * cards[deck].length);
+            }
+            
+            const randomIndex = available[Math.floor(Math.random() * available.length)];
+            usedCards[deck].push(randomIndex);
+            return randomIndex;
+        }
+
+        function startNewQuestion() {
+            currentCard = getRandomCard('knowMe');
+            document.getElementById('questionText').textContent = KNOW_ME_QUESTIONS[currentCard];
+            showView('questionView');
+            startTimer();
+        }
+
+        function startTimer() {
+            timeLeft = 15;
+            document.getElementById('timerDisplay').textContent = timeLeft;
+            
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timerDisplay').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleWrong();
+                }
+            }, 1000);
+        }
+
+        function handleCorrect() {
+            if (timerInterval) clearInterval(timerInterval);
+            currentCard = getRandomCard('spicy');
+            document.getElementById('spicyText').textContent = SPICY_CARDS[currentCard];
+            showView('spicyView');
+        }
+
+        function handleWrong() {
+            if (timerInterval) clearInterval(timerInterval);
+            currentCard = getRandomCard('dare');
+            document.getElementById('dareText').textContent = DARE_CARDS[currentCard];
+            showView('dareView');
+        }
+
+        function nextRound() {
+            showView('homeView');
+        }
     </script>
 </body>
 </html>
