@@ -110,7 +110,6 @@ export default function DareOrSpicyGame() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
   const [timerActive, setTimerActive] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
   const [usedCards, setUsedCards] = useState({ knowMe: [], dare: [], spicy: [] });
 
   useEffect(() => {
@@ -123,7 +122,9 @@ export default function DareOrSpicyGame() {
       setTimerActive(false);
       handleTimeout();
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [timerActive, timeLeft]);
 
   const handleLogin = () => {
@@ -138,11 +139,9 @@ export default function DareOrSpicyGame() {
   const startTimer = () => {
     setTimeLeft(15);
     setTimerActive(true);
-    setShowAnswer(false);
   };
 
   const handleTimeout = () => {
-    setShowAnswer(true);
     setCurrentDeck('dare');
     pickRandomCard('dare');
   };
@@ -168,7 +167,7 @@ export default function DareOrSpicyGame() {
     
     const cards = deckMap[deck];
     const availableIndices = cards
-      .map((_, i) => i)
+      .map((c, i) => i)
       .filter(i => !usedCards[deck].includes(i));
     
     if (availableIndices.length === 0) {
@@ -195,7 +194,6 @@ export default function DareOrSpicyGame() {
     setCurrentCardIndex(0);
     setTimeLeft(15);
     setTimerActive(false);
-    setShowAnswer(false);
   };
 
   if (!isAuthenticated) {
